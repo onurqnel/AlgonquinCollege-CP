@@ -1,0 +1,45 @@
+-- Lab 06 - DDL and DML 1
+-- Onur Onel
+-- 041074824
+-- Due November 11 at 11.59pm
+-- ----------------------------------------------------------------------------------
+
+USE flightdb;
+
+SELECT * FROM aircrafts;
+
+-- QUESTION 1
+SELECT * FROM aircrafts;
+
+-- QUESTION 2
+SELECT name, description FROM aircrafts;
+
+-- QUESTION 3
+SELECT distinct name FROM aircrafts;
+
+-- QUESTION 4
+SELECT `name` AS "Airport name", city FROM airports;
+
+-- QUESTION 5
+SELECT name, city, elevation FROM airports WHERE country_id = 24;
+
+-- QUESTION 6
+SELECT * FROM countries WHERE id = 24;
+
+-- QUESTION 7
+SELECT elevation FROM airports WHERE elevation BETWEEN 400 AND 500;
+
+-- QUESTION 8
+SELECT * FROM airlines WHERE name LIKE 'Air%';
+
+-- QUESTION 9
+SELECT * FROM airlines WHERE name LIKE '%International%';
+
+-- QUESTION 10
+SELECT * FROM airlines WHERE name LIKE '%Aviation';
+
+-- QUESTION 11
+SELECT name FROM airports WHERE elevation = 0 AND country_id = (SELECT id From countries  WHERE name = 'Canada');
+
+-- QUESTION 12
+SELECT name FROM airlines WHERE active = 'Y' AND country_id = (SELECT id From countries WHERE name = 'France');

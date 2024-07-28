@@ -1,0 +1,65 @@
+#!/bin/sh -u
+PATH=/bin:/usr/bin ; export PATH
+umask 022
+
+# Onur Onel onel0001@algonquinlive.com
+
+
+# Checks if there are at least two arguments given.
+
+  if [ $# -lt 2 ]; then
+       echo "Error: Requires at least two arguments" >&2
+       echo "Usage:$0 student no arg1 arg2..." >&2
+   exit 1
+fi
+# Gets the student number from the first argument, and saves as a txt file.
+
+result_file="$1".txt
+
+# Removes the first argument, so the second argument becomes the new first argument.
+
+shift
+
+# Writes my student numbers last 4 digit to first line of output.
+
+echo "#4824" >"$result_file"
+
+question_number=1
+
+# Loop over each arg '$@' and convert to output format.
+for answer_input in "$@"; do
+
+# Initialize the answer output to an empty string	
+  answer_output=""
+
+# Use a series of if statements to check the value of the argument and set the answer output accordingly
+
+if [ "$answer_input" = "1" ]; then
+    answer_output="A"
+  elif [ "$answer_input" = "2" ]; then
+    answer_output="B"
+  elif [ "$answer_input" = "3" ]; then
+    answer_output="C"
+  elif [ "$answer_input" = "4" ]; then
+    answer_output="D"
+  elif [ "$answer_input" = "5" ]; then
+    answer_output="E"
+  elif [ "$answer_input" = "-" ]; then
+    answer_output="-"
+  else
+
+# If the argument is not a valid option, print an error message and exit the script
+
+echo "Invalid answer: $answer_input" >&2
+    rm "$result_file"
+    exit 2
+  fi
+
+# Append the question number and answer output to the result file
+
+  echo "$question_number) $answer_output" >>"$result_file"
+
+# Increment the question number for the next question
+  
+  question_number=$((question_number+1))
+done

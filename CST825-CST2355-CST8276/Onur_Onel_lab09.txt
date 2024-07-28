@@ -1,0 +1,118 @@
+-- Lab 9 - Joins, Subqueries and Derived Tables
+-- Onur Onel
+-- 041074824
+-- Due December 02 at 11.59pm
+-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- 1query that display the airport name, city and country name for all airports.
+SELECT airports.name, city, countries.name country
+FROM airports INNER JOIN countries ON airports.country_id = countries.id;
+
+-- 2query that lists all routes that have a source airport of “Lester B Pearson Intl. 
+-- Display the name of the airport, the airline id and codeshare. 
+SELECT 
+(select name from airports where id = source_airport_id)
+as source_airport_name,
+(select name from airports where id = destination_airport_id) as destinition_airport_name, airline_id, 
+codeshare FROM `routes` AS rts
+where(select name from airports where id = source_airport_id) = 'Lester B Pearson Intl';
+
+
+
+-- 3query that lists all routes that have a source airport of “Lester B Pearson Intl.  
+-- Display only the distinct names of the airport and airlines.
+SELECT DISTINCT
+(select name from airports where id = source_airport_id)
+as source_airport_name,
+(select name from airports where id = destination_airport_id) as destination_airport_name,
+(select name from airports where id = airline_id) as
+airline_name, codeshare
+From `routes` AS rts,
+(select name from airports where id = source_airport_id) = 'Lester B Pearson Intl';
+
+-- 4query that lists all aircrafts for each airline that operates a route with a source airport 
+-- of “Lester B Pearson Intl.  Display only the distinct names for the airport, airlines and 
+-- aircraft description.
+SELECT DISTINCT destination_airports.name `airport_name`, airlines.name `airlines_name`,aircrafts.description `aircrafts_description`
+FROM routes
+INNER JOIN airports AS source_airports ON routes.source_airport_id = source_airports.id 
+INNER JOIN airports AS destination_airports ON routes.destination_airport_id = destination_airports.id
+INNER JOIN airlines ON routes.airline_id = airlines.id
+INNER JOIN route_aircrafts ON routes.id = route_aircrafts.route_id
+INNER JOIN aircrafts ON aircrafts.id = route_aircrafts.aircraft_id
+WHERE source_airports.name = "Lester B Pearson Intl";
+
+-- 5query that display the name of the airline and what country they are based in.
+SELECT airlines.name `airline_name`, countries.name `country_name`
+FROM airlines
+INNER JOIN countries ON airlines.country_id = countries.id;
+
+-- 6query that counts how many airlines are based in which countries.  
+-- You must display the name of the country and the airline.
+SELECT COUNT(*) `number_of_airlines`, countries.name `country_name`
+FROM airlines
+INNER JOIN countries ON airlines.country_id = countries.id
+GROUP BY countries.name;
+
+-- 7query that display the how many different aircraft operate routes that end at 
+-- airports (destination) in the country of France. You must display the distinct count of aircrafts.
+SELECT COUNT(*), countries.name AS country_name
+FROM routes
+INNER JOIN route_aircrafts ON routes.id = route_aircrafts.route_id
+INNER JOIN aircrafts ON aircrafts.id = route_aircrafts.aircraft_id
+INNER JOIN airports ON routes.destination_airport_id = airports.id
+INNER JOIN countries ON countries.id = airports.country_id
+WHERE countries.name = 'france';
+
+-- 8query that display the how many different airlines that operate routes that end at 
+-- airports (destination) in the countries of France, Germany, Spain and Italy. 
+-- You must display the distinct count of airlines and the name of the country.
+
+SELECT DISTINCT COUNT(*) AS number_of_airlines, countries.name AS country_name
+FROM routes
+INNER JOIN airlines ON routes.airline_id = airlines.id
+INNER JOIN countries ON countries.id = airlines.country_id
+WHERE countries.name = "France" 
+OR countries.name = "Germany"
+OR countries.name = "Spain"
+OR countries.name = "Italy"
+GROUP BY countries.name;
+
+
+-- 9query that display the name of the airline, aircraft and country for airlines that 
+-- operate on routes that end at airports (destination) in the countries of 
+-- France, Germany, Spain and Italy.
+
+SELECT airlines.name AS airlines_name, aircrafts.name AS aircrafts_name, countries.name 
+FROM routes
+INNER JOIN route_aircrafts ON routes.id = route_aircrafts.route_id
+INNER JOIN aircrafts ON aircrafts.id = route_aircrafts.aircraft_id
+INNER JOIN airlines ON routes.airline_id = airlines.id
+INNER JOIN countries ON countries.id = airlines.country_id
+WHERE countries.name = "France" 
+OR countries.name = "Germany"
+OR countries.name = "Spain"
+OR countries.name = "Italy"
+
+-- 10query that display the count of each “wake size” for aircrafts operated 
+-- by airlines that operate routes that start at airports (source) in the 
+-- countries Canada, United States and Mexico.
+SELECT DISTINCT COUNT(*) `number_of_wake_size`, countries.name `country_name`
+FROM route_aircrafts
+JOIN routes ON routes.id = route_aircrafts.route_id
+JOIN aircrafts ON aircrafts.id = route_aircrafts.aircraft_id
+JOIN airlines ON airlines.id = routes.airline_id
+JOIN airports ON airports.id = routes.source_airport_id
+JOIN countries ON countries.id = airports.country_id
+WHERE countries.name IN ("Canada","United States","Mexico")
+GROUP BY aircrafts.wake_size;
+
+-- 11Redo #8 using a subquery in the WHERE clause.
+SELECT countries.name `destination_country_name`,COUNT(DISTINCT airlines.name)`number_airline`
+FROM route_aircrafts
+JOIN routes ON routes.id = route_aircrafts.route_id
+JOIN aircrafts ON aircrafts.id = route_aircrafts.aircraft_id
+JOIN airlines ON airlines.id = routes.airline_id
+JOIN airports ON airports.id = routes.destination_airport_id
+JOIN countries ON countries.id = airports.country_id
+WHERE countries.name IN (SELECT name FROM countries WHERE name IN ("France" ,"Germany","Spain","Italy"))
+GROUP BY destination_airport_id;

@@ -1,0 +1,42 @@
+-- Lab 06 - DDL and DML 1
+-- Onur Onel
+-- 041074824
+-- Due November 11 at 11.59pm
+-- ----------------------------------------------------------------------------------
+
+-- 1. Count how many rows are present in the airlines table.
+SELECT COUNT(*) FROM airlines; 
+
+-- 2.Calculate the average elevation in the airports tables
+SELECT AVG(elevation) FROM airports;
+
+-- 3.Calculate the maximum and minimum elevations in the airports table.
+SELECT elevation,
+    MIN(elevation) AS minimum, 
+    MAX(elevation) AS maximum
+FROM airports;
+
+-- 4.Calculate the average elevation, grouped by country id, in the airports table
+SELECT AVG(elevation) AS average_elevation FROM airports GROUP BY country_id;
+
+-- 5.Calculate the average elevation, grouped by country id, in the airports table ordered by country id.
+SELECT AVG(elevation) AS country_id FROM airports GROUP BY country_id ORDER BY country_id;
+
+-- 6.Calculate the average elevation, grouped by country id, in the airports table ordered by the average elevation in descending order.
+SELECT AVG(elevation) AS country_id FROM airports GROUP BY country_id ORDER BY AVG(elevation) DESC;
+
+-- 7.Calculate the average elevation, grouped by country id, in the airports table ordered by 
+-- the average elevation in descending order for any country that has an average elevation of at least 300.
+SELECT AVG (elevation)"Avg_elevation", country_id FROM airports WHERE elevation >= 300 GROUP BY country_id ORDER BY AVG(elevation) DESC;
+
+-- 8.Provide the query to determine how many aircrafts does “Boeing” have that starts with “74”.
+SELECT COUNT(*)"NUMBER" FROM aircrafts WHERE 'name' = 'Boeing%' AND 'code' LIKE '74%';
+
+-- 9.Provide the query to determine how many different wake sizes do “Boeing” and “Airbus” have?
+SELECT COUNT(DISTINICT name, wake_size)"Number"
+FROM aircrafts WHERE 'name' = "Boeing" OR 'name' = "Airbus";
+
+-- 10.Provide the query to determine how many active airlines are present in Canada.  You  will need 2 queries.
+SELECT COUNT(*) FROM airlines  
+WHERE 'active' = "Y" AND 'country_id' = (SELECT 'id' FROM countries WHERE 'name' = "Canada");
+

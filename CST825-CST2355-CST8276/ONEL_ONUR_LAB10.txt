@@ -1,0 +1,76 @@
+-- Lab 10  
+-- Onur Onel
+-- 041074824
+-- ----------------------------------------------------------------------------------
+
+USE flightdb;
+ALTER TABLE `flightdb`.`countries` ENGINE = InnoDB;
+
+-- 1. Provide a query that will create a view for task 8 from Lab 9.
+CREATE VIEW `from_europe` AS
+SELECT
+    c.name AS destination_country_name,
+    count(DISTINCT al.name) AS airline_count
+FROM route_aircrafts AS ra
+JOIN routes AS r ON r.id = ra.route_id
+JOIN aircrafts AS a ON a.id = ra.aircraft_id
+JOIN airlines AS al ON al.id = r.airline_id
+JOIN airports AS ap ON ap.id = r.destination_airport_id
+JOIN countries AS c ON c.id = ap.country_id
+WHERE c.name IN ('France', 'Germany', 'Spain', 'Italy')
+GROUP BY destination_country_name
+ORDER BY destination_country_name;
+
+-- 2. Provide a query that would create an index that would improve the performance of searches against the elevation field.
+CREATE INDEX elevation_index ON airports(elevation);
+
+-- 3. Provide a query that would create an index that would improve the performance of searches against both the source and destination airport field.
+CREATE INDEX destinations_index ON routes(source_airport_id, destination_airport_id);
+
+-- 4. How many rows are in the countries table.  Provide the actual number.
+SELECT COUNT(*) AS row_count FROM countries;
+-- 240 rows
+
+-- 5. Open a second connection to your local MySQL server.
+-- Created another connection called 'Second Connection'
+
+-- 6. Start a transaction in the first connection and insert a row in the countries table.
+START TRANSACTION;
+
+INSERT INTO countries (id, name) VALUES (241, 'Country');
+
+-- 7. In the first connection, how many rows are in the countries table now?
+SELECT COUNT(*) AS row_count FROM countries;
+-- 241 rows
+
+-- 8. In the second connection, how many rows are reported in the countries table?
+SELECT COUNT(*) AS row_count FROM countries;
+-- 240 rows
+
+-- 9. Commit the transaction in the first connection.
+COMMIT;
+
+-- 10. In the second connection, how many rows are reported in the countries table?
+SELECT COUNT(*) AS row_count FROM countries;
+-- 241 rows
+
+-- 11. Again, start a transaction in the first connection.
+START TRANSACTION;
+
+-- 12. Delete the row you just added.
+DELETE FROM countries WHERE id = 241;
+
+-- 13. In the first connection, how many rows are in the countries table now?
+SELECT COUNT(*) AS row_count FROM countries;
+-- 240 rows
+
+-- 14. In the second connection, how many rows are reported in the countries table?
+SELECT COUNT(*) AS row_count FROM countries;
+-- 241 rows
+
+-- 15. Commit the transaction in the first connection.
+COMMIT;
+
+-- 16. In the second connection, how many rows are reported in the countries table?
+SELECT COUNT(*) AS row_count FROM countries;
+-- 240 rows

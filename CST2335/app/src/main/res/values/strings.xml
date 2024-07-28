@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">OnurAndroidLabs</string>
+    <string name="about">About</string>
+    <string name="delete_this_item">Delete this item</string>
+    <string name="send">Send</string>
+    <string name="type_message">Type message</string>
+    <string name="receive">Receive</string>
+</resources>

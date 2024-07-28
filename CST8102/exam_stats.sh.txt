@@ -1,0 +1,61 @@
+#!/bin/bash -u
+PATH=/bin:/usr/bin ; export PATH
+umask 022
+
+# onel0001@algonquinlive.com
+
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 student1 student2 ..." >&2
+    exit 1
+fi
+
+args=( "$@" )
+
+num_students=0
+sum_grades=0
+min_grade=100
+max_grade=0
+top_student=""
+bottom_student=""
+
+for arg in "${args[@]}"; do
+    student_number=$(echo "$arg" | cut -d: -f1)
+    student_name=$(echo "$arg" | cut -d: -f2)
+    student_grade=$(echo "$arg" | cut -d: -f3)
+
+      if (( student_grade < 0 || student_grade > 100 )); then
+        echo "Error: invalid grade for student $student_name: $student_grade" >&2
+        exit 10
+    fi
+
+    num_students=$((num_students + 1))
+    sum_grades=$((sum_grades + student_grade))
+
+    if (( student_grade < min_grade )); then
+        min_grade="$student_grade"
+	bottom_student="$arg"
+    fi
+    if (( student_grade > max_grade )); then
+        max_grade="$student_grade"
+	top_student="$arg"
+    fi
+done
+
+avg_grade=$(( sum_grades / num_students ))
+
+{
+    echo "#4824"
+    echo "NUM_STUDS=$num_students"
+    echo "AVG=$avg_grade"
+    echo "TOP_ID=$(echo "$top_student" | cut -d ':' -f 1)"
+    echo "TOP_NAME=$(echo "$top_student" | cut -d ':' -f 2)"
+    echo "TOP_GRADE=$(echo "$top_student" | cut -d ':' -f 3)"
+    echo "BOTTOM_ID=$(echo "$bottom_student" | cut -d ':' -f 1)"
+    echo "BOTTOM_NAME=$(echo "$bottom_student" | cut -d ':' -f 2)"
+    echo "BOTTOM_GRADE=$(echo "$bottom_student" | cut -d ':' -f 3)"
+} > stats.txt
+
+cat stats.txt > output.txt
+rm output.txt
+
+

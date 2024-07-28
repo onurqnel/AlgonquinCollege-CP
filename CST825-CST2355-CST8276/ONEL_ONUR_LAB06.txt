@@ -1,0 +1,114 @@
+-- Lab 06 - DDL and DML 1
+-- Onur Onel
+-- 041074824
+-- Due November 11 at 11.59pm
+-- ----------------------------------------------------------------------------------
+
+Create TABLE Customers
+(
+customer_ID      int,
+cname           varchar(50),
+email           varchar(150),
+phone_number     varchar(20),
+street_address   varchar(50),
+city            varchar(30),
+province        char(2),
+postalcode      char(6),
+CONSTRAINT pk_customer_ID    PRIMARY KEY(customer_ID),
+CONSTRAINT unique_cname      UNIQUE(cname)
+);
+
+Create TABLE Orders
+(
+order_ID       int,
+order_date     datetime,
+customer_ID    int,
+CONSTRAINT pk_order_ID      PRIMARY KEY(order_ID),
+CONSTRAINT fk_customer_ID   FOREIGN KEY(customer_ID)
+						    REFERENCES Customers(customer_ID)
+);
+
+Create TABLE Product_types
+(
+product_typeID      int,
+pname               varchar(50),
+CONSTRAINT pk_product_typeID       PRIMARY KEY(product_typeID),
+CONSTRAINT unique_pname            UNIQUE(pname)
+);
+
+Create TABLE Products
+(
+product_ID         int,
+pdescription      varchar(75)        NOT NULL,
+price             Decimal(6,2),
+product_typeID    int,
+CONSTRAINT pk_productID          PRIMARY KEY(product_ID),
+CONSTRAINT fk_product_typeID     FOREIGN KEY(product_typeID)
+								 REFERENCES Product_types(product_typeID)
+);
+
+Create TABLE Order_lines
+(
+order_ID        int,
+product_ID      int,
+quantity        int,
+price           decimal(6,2),
+line_total      decimal(8,2),
+CONSTRAINT fk_order_ID       FOREIGN KEY(order_ID)
+                             REFERENCES Orders(order_ID),
+CONSTRAINT fk_product_ID     FOREIGN KEY(product_ID)
+                             REFERENCES Products(product_ID)
+);
+
+insert into Customers (customer_ID, cname, email, phone_number, street_address, city, province, postalcode) 
+values (1, 'Selie Frizell', 'sfrizell0@state.tx.us', '459-949-5096', '7363 Merrick Avenue', 'Fox Creek', 'Al', 'E4B');
+insert into Customers (customer_ID, cname, email, phone_number, street_address, city, province, postalcode)
+ values (2, 'Denis Dummigan', 'ddummigan1@sogou.com', '151-118-4210', '0 Morning Parkway', 'Barrie', 'On', 'L9J');
+insert into Customers (customer_ID, cname, email, phone_number, street_address, city, province, postalcode) 
+values (3, 'Sandye Gare', 'sgare2@statcounter.com', '839-388-4429', '80 Russell Pass', 'Grimshaw', 'Al', 'N4W');
+insert into Customers (customer_ID, cname, email, phone_number, street_address, city, province, postalcode)
+ values (4, 'Livy Boughton', 'lboughton3@yale.edu', '582-976-8002', '46640 Birchwood Street', 'Pembroke', 'On', 'K8B');
+insert into Customers (customer_ID, cname, email, phone_number, street_address, city, province, postalcode) 
+values (5, 'Sydel Coppock.', 'scoppock4@sfgate.com', '401-742-6720', '134 Hallows Parkway', 'Barrhead', 'Al', 'T7N');
+insert into Customers (customer_ID, cname, email, phone_number, street_address, city, province, postalcode)
+ values (6, 'Falkner Gimenez', 'fgimenez5@baidu.com', '913-118-2076', '4 Starling Road', 'Rocky Mountain House', 'Al', 'T4T');
+insert into Customers (customer_ID, cname, email, phone_number, street_address, city, province, postalcode)
+ values (7, 'Lindi Farris', 'lfarris6@dmoz.org', '228-712-1019', '7508 Delaware Lane', 'Peterborough', 'On', 'K9H');
+insert into Customers (customer_ID, cname, email, phone_number, street_address, city, province, postalcode)
+ values (8, 'Aguie Vitall', 'avitall7@smh.com.au', '746-408-1621', '9794 Twin Pines Pass', 'Lillooet', 'BC', 'H9G');
+insert into Customers (customer_ID, cname, email, phone_number, street_address, city, province, postalcode)
+ values (9, 'Carmon Clac', 'cclac8@i2i.jp', '172-677-8058', '18 Hansons Lane', 'Killam', 'Al', 'A0A');
+insert into Customers (customer_ID, cname, email, phone_number, street_address, city, province, postalcode)
+ values (10, 'Hulda Lambeth', 'hlambeth9@wired.com', '140-351-0549', '56 Mallard Alley', 'West Kelowna', 'BC', 'V1Z');
+
+
+insert into Product_types (product_typeID , pname) 
+values (123, 'Software');
+insert into Product_types (product_typeID , pname) 
+values (234, 'Hardware');
+insert into Product_types (product_typeID , pname) 
+values (345, 'Service');
+
+insert into Products (product_ID , pdescription, price, product_typeID) 
+ values (1, 'Windows11', '121.04', '123');
+insert into Products (product_ID , pdescription, price, product_typeID)
+ values (2, 'Mause', '90.13', '234');
+insert into Products (product_ID , pdescription, price, product_typeID)
+ values (3, 'Spotify', '45.10', '345');
+insert into Products (product_ID , pdescription, price, product_typeID)
+ values (4, 'Keyboard', '80.76', '234');
+insert into Products (product_ID , pdescription, price, product_typeID)
+ values (5, 'Anti-virus', '102.51', '123');
+insert into Products (product_ID , pdescription, price, product_typeID)
+ values (6, 'Netflix', '45.10', '345');
+
+UPDATE Customers
+SET phone_number    = '613-883-0413'
+WHERE customer_ID   = 9;
+
+UPDATE Customers
+SET   postalcode    = 'K2G'
+WHERE customer_ID   = 5;
+
+DELETE FROM Product_types
+WHERE Products = '123'

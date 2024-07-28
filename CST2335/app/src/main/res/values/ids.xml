@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="messageText" type="id" />
+    <item name="timeText" type="id" />
+    <item name="sendButton" type="id" />
+    <item name="inputText" type="id" />
+    <item name="message" type="id" />
+    <item name="time" type="id" />
+    <item name="myToolbar" type="id" />
+</resources>
