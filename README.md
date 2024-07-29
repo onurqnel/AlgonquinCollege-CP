@@ -1,7 +1,5 @@
 # Algonquin College Computer Programming Diploma Archive (2022-2024)
 
-My Algonquin College two-year Computer Programming Ontario College Diploma program assignment and lab archive from 2022-2024.
-
 At Algonquin College, the primary programming languages taught were Java (specializing in Jakarta EE, Jakarta Persistence, RESTful architecture, and JUnit) and C++, my personal choice. I am proficient in object-oriented programming and design patterns. Through the Operating System Fundamentals course, I gained experience with shell scripting. Additionally, three database courses taught SQL and advanced database systems, including various RDBMSs like Oracle, MySQL, and PostgreSQL, alongside NoSQL databases such as MongoDB. I also learned web development technologies, including HTML, CSS, JavaScript, React.js, and Tailwind CSS. In my second year, I focused on Business Intelligence and Data Analytics, where I learned machine learning algorithms, data preprocessing, feature engineering, and model evaluation using tools such as Weka, Excel, and Python. Furthermore, I actively participated in software development projects, working in sprints with customers to deliver high-quality solutions.
 
 **My cumulative GPA**: 3.50 out of 4 
