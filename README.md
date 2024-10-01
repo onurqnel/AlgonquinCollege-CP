@@ -2,7 +2,7 @@
 
 [Algonquin College Computer Programming Program](https://www.algonquincollege.com/sat/program/computer-programming/)
 
-## Level 01
+## Level 01 Fall2022
 - **CST8116 - Introduction to Computer Programming**  
   Fundamentals of logic, problem-solving, and programming language structure.
 - **CST8118 - Computer Essentials**  
@@ -16,7 +16,7 @@
 - **MAT8001C - Technical Mathematics for Computer Science**  
   Algebraic and transcendental functions as a prerequisite to Calculus.
 
-## Level 02
+## Level 02 Winter2023
 - **CST2355 - Database Systems**  
   Automating data processing tasks and integrating security in IT systems.
 - **CST8102 - Operating System Fundamentals (GNU/Linux)**  
@@ -32,7 +32,7 @@
 - **GED0336 - General Education Elective**  
   One elective course meeting Arts in Society or other requirements.
 
-## Level 03
+## Level 03 Summer2023
 - **CST2234 - Systems Analysis and Design**  
   Planning and designing complex IT systems using standard methodologies.
 - **CST2335 - Mobile Graphical Interface Programming**  
@@ -44,7 +44,7 @@
 - **CST8390 - Business Intelligence and Data Analytics**  
   Applications and best practices for integrating and transforming data.
 
-## Level 04
+## Level 04 Fall2023
 - **CST8002 - Programming Language Research Project**  
   Learning a new programming language or framework independently.
 - **CST8276 - Advanced Database Topics**  
